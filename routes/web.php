@@ -3,7 +3,9 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PemesananController;
 use App\Models\Produk;
+use App\Models\Pemesanan;
 use Inertia\Inertia;
 
 /*
@@ -19,7 +21,7 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     $jumlahproduk=Produk::count();
-    return view('welcome',['jumlahproduk' => $jumlahproduk]);
+    return view('welcome',compact('jumlahproduk'));
 });
 
 Route::get('/dashboard', function () {
@@ -28,5 +30,6 @@ Route::get('/dashboard', function () {
 
 
 Route::resource('produk', ProdukController::class);
+Route::resource('pemesanan', PemesananController::class);
 
 require __DIR__.'/auth.php';

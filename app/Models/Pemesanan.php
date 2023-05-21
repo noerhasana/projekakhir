@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pemesanan extends Model
 {
+
     use HasFactory;
     protected $guarded = [];
+    protected $table = 'pemesanan';
 
     public function Produk()
     {

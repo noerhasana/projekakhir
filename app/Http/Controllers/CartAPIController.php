@@ -37,7 +37,19 @@ class CartAPIController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'user_id' => 'required',
+            'produk_id' => 'required',
+         ]);
+         
+         $produk = Cart::create([
+            'user_id' => $request->user_id,
+            'produk_id' => $request->produk_id,
+         ]);
+
+        
+
+      return redirect()->route('produk.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
     /**

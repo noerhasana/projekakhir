@@ -165,13 +165,13 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="./index2.html" class="nav-link">
+                            <a href="/pemesanan" class="nav-link">
                                 <i class="fas fa-shopping-cart"></i>
                                 <p>Pemesanan</p>
                             </a>
                         </li>
 
-                        <li class="nav-item menu-open">
+                        {{-- <li class="nav-item menu-open">
                             <a href="#" class="nav-link ">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
@@ -186,7 +186,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>

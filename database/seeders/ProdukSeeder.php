@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\KategoriProduk;
 use App\Models\Produk;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
 class ProdukSeeder extends Seeder
 {
@@ -15,14 +16,8 @@ class ProdukSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('produks')->insert([
-            'gambar' => '',
-            'nama_produk' => 'gamis',
-            'harga' => 'Rp 100.000',
-            'ukuran' => 'L',
-            'warna' => 'hitam',
-            'stok' => '5',
-            'deskripsi' => 'bagus',
-        ]);
+        KategoriProduk::factory(5)
+            ->hasListProduk(7)
+            ->create();
     }
 }

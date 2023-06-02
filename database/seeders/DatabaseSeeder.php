@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,9 +16,14 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
+        Role::firstOrCreate(['name' => 'pelanggan']);
+
+
         $this->call([
-            ProdukSeeder::class,
-            UserSeeder::class
+            AdminSeeder::class,
+            // WilayahProvinsiSeeder::class,
+            // WilayahKabupatenSeeder::class,
+            StatusPesananSeeder::class,
         ]);
     }
 }

@@ -1,20 +1,35 @@
-require('./bootstrap');
+import './bootstrap';
+import '../css/app.css';
 
 import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/inertia-vue3';
-import { InertiaProgress } from '@inertiajs/progress';
+import { createInertiaApp } from '@inertiajs/vue3';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import PrimeVue from 'primevue/config';
+import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
+
+import "primevue/resources/primevue.min.css";
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import 'primevue/resources/primevue.min.css';
+import 'primevue/resources/themes/soho-light/theme.css'
+
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) => require(`./Pages/${name}.vue`),
-    setup({ el, app, props, plugin }) {
-        return createApp({ render: () => h(app, props) })
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    setup({ el, App, props, plugin }) {
+        return createApp({ render: () => h(App, props) })
             .use(plugin)
-            .mixin({ methods: { route } })
+            .use(PrimeVue)
+            .use(ConfirmationService)
+            .use(ToastService)
+            .use(ZiggyVue, Ziggy)
             .mount(el);
     },
+    progress: {
+        color: '#4B5563',
+    },
 });
-
-InertiaProgress.init({ color: '#4B5563' });

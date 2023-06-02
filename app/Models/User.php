@@ -6,44 +6,72 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Produk;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
+        'no_hp',
         'email',
         'password',
+        'avatar',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
+        'avatar',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function produks()
+
+    protected $appends = [
+        'role',
+        'avatar_url',
+    ];
+
+    public function getAvatarUrlAttribute()
     {
-        return $this->belongsToMany(Produk::class,'carts', 'user_id', 'produk_id');
+        return ($this->avatar == null)
+            ? env('APP_URL').'/images/default-avatar.jpg'
+            : Storage::url($this->avatar);
+    }
+
+    public function getRoleAttribute()
+    {
+        return $this->roles()->get(['name'])->pluck('name');
+    }
+
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function pemesanan() 
+    {
+        return $this->hasMany(Pemesanan::class);
+    }
+
+    public function komentar() 
+    {
+        return $this->hasMany(KomentarProduk::class);
+    }
+
+    public function rating() 
+    {
+        return $this->hasMany(UserRatingProduk::class);
+    }   
+
+    public function alamat()
+    {
+        return $this->hasMany(AlamatPelanggan::class);
     }
 }
